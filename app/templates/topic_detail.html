@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ topic.name }} — Pythonpédia</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+
+<body>
+    <header class="header">
+        <a href="/" class="brand">
+            <span class="brand-icon">Py</span>
+            <span>Pythonpédia</span>
+        </a>
+
+        <nav>
+            <a href="/topics">Topics</a>
+            <a href="/docs" class="nav-button">API Docs</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="catalog-header">
+            <a href="/topics" class="back-link">
+                ← Tous les topics
+            </a>
+
+            <h1>{{ topic.name }}</h1>
+            <p class="description">
+                Ressources et références Python
+                associées à cette thématique.
+            </p>
+        </section>
+
+        <section class="resources">
+            {% for item in topic.items %}
+            <article class="resource-group">
+                <h2>{{ item.name }}</h2>
+
+                <ul class="resource-list">
+                    {% for url in item.urls %}
+                    <li>
+                        <a href="{{ url }}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="resource-url">{{ url }}</span>
+                            <span>↗</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="empty-resource">
+                        Aucune ressource disponible.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% else %}
+            <p>Aucune ressource pour ce topic.</p>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

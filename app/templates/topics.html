@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topics — Pythonpédia</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+
+<body>
+    <header class="header">
+        <a href="/" class="brand">
+            <span class="brand-icon">Py</span>
+            <span>Pythonpédia</span>
+        </a>
+
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/docs" class="nav-button">API Docs</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="catalog-header">
+            <span class="eyebrow">ENCYCLOPÉDIE PYTHON</span>
+            <h1>Explorer les topics</h1>
+            <p class="description">
+                Découvrez les ressources Python disponibles
+                sur ce serveur, organisées par thématique.
+            </p>
+        </section>
+
+        <section class="topics-grid">
+            {% for topic in topics %}
+            <a class="topic-card"
+               href="{{ url_for('topic_page', topic_name=topic) }}">
+
+                <span class="topic-icon">#</span>
+
+                <h2>{{ topic }}</h2>
+                <p>Explorer les ressources</p>
+
+                <span class="topic-arrow">↗</span>
+            </a>
+            {% else %}
+            <p>Aucun topic disponible pour le moment.</p>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

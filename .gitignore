@@ -1,0 +1,54 @@
+
+# ==========================================
+# Pythonpédia — Git Ignore
+# ==========================================
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Variables d'environnement et secrets
+.env
+.env.*
+!.env.example
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Tests
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Outils de typage et de qualité
+.mypy_cache/
+.ruff_cache/
+.pyright/
+
+# Bases de données locales
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+*.bak
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Fichiers de distribution
+build/
+dist/
+*.egg-info/

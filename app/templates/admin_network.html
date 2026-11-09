@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administration réseau — Pythonpédia</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='/css/style.css') }}">
+
+    <script
+        src="{{ url_for('static', path='/js/admin_network.js') }}"
+        defer>
+    </script>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="/" class="brand">
+        <span class="brand-icon">Py</span>
+        <span>Pythonpédia</span>
+    </a>
+
+    <nav>
+        <a href="/search">Rechercher</a>
+        <a href="/topics">Topics</a>
+        <a href="/">Accueil</a>
+    </nav>
+</header>
+
+<main class="admin-container">
+
+    <section class="admin-heading">
+        <span class="eyebrow">ADMINISTRATION</span>
+        <h1>Gestion du réseau</h1>
+        <p>
+            Découvrez les serveurs Pythonpédia,
+            gérez leur approbation et synchronisez
+            les ressources de l'encyclopédie.
+        </p>
+    </section>
+
+    <!-- AUTHENTIFICATION -->
+
+    <section class="admin-panel">
+        <h2>Accès administrateur</h2>
+
+        <form id="auth-form" class="admin-form">
+            <input
+                id="api-key"
+                type="password"
+                placeholder="Clé API administrateur"
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit" class="admin-button">
+                Se connecter
+            </button>
+
+            <button
+                type="button"
+                id="logout-button"
+                class="admin-button secondary"
+            >
+                Déconnecter
+            </button>
+        </form>
+
+
+        <p id="auth-status" class="admin-muted" role="status">
+            Non connecté
+        </p>
+
+        <p class="admin-muted">
+            Pour accéder à l'administration, utilisez la clé
+            fournie avec le projet.
+        </p>
+
+    </section>
+
+    <div id="admin-content" hidden>
+
+        <!-- STATISTIQUES -->
+
+        <section class="admin-stats">
+            <div class="admin-stat">
+                <span id="total-peers">0</span>
+                <p>Serveurs connus</p>
+            </div>
+
+            <div class="admin-stat">
+                <span id="approved-peers">0</span>
+                <p>Serveurs approuvés</p>
+            </div>
+
+            <div class="admin-stat">
+                <span id="pending-peers">0</span>
+                <p>En attente</p>
+            </div>
+        </section>
+
+        <!-- DÉCOUVERTE -->
+
+        <section class="admin-panel">
+            <div class="admin-section-heading">
+                <div>
+                    <h2>Découverte réseau</h2>
+                    <p>
+                        Rechercher de nouveaux serveurs
+                        parmi les candidats autorisés.
+                    </p>
+                </div>
+            </div>
+
+            <button id="discover-button" class="admin-button">
+                Découvrir les serveurs
+            </button>
+        </section>
+
+        <!-- AJOUT MANUEL -->
+
+        <section class="admin-panel">
+            <h2>Ajouter un serveur</h2>
+
+            <form id="add-peer-form" class="admin-form">
+                <input
+                    id="peer-url"
+                    type="url"
+                    placeholder="http://192.168.1.15:8888"
+                    required
+                >
+
+                <button type="submit" class="admin-button">
+                    Ajouter
+                </button>
+            </form>
+        </section>
+
+        <!-- ANNUAIRE -->
+
+        <section class="admin-panel">
+            <div class="admin-section-heading">
+                <div>
+                    <h2>Annuaire des serveurs</h2>
+                    <p>Serveurs connus de notre instance Pythonpédia.</p>
+                </div>
+
+                <button
+                    id="refresh-button"
+                    class="admin-button secondary"
+                >
+                    Actualiser
+                </button>
+            </div>
+
+            <div id="peers-list" class="peers-list"></div>
+        </section>
+
+        <!-- SYNCHRONISATION -->
+
+        <section class="admin-panel">
+            <h2>Synchronisation</h2>
+
+            <p>
+                Récupérer les topics, les références et les annuaires
+                depuis tous les serveurs approuvés.
+            </p>
+
+            <button id="sync-button" class="admin-button">
+                Synchroniser les serveurs approuvés
+            </button>
+        </section>
+
+        <!-- RAPPORT -->
+
+        <section class="admin-panel">
+            <h2>Journal des opérations</h2>
+
+            <pre id="operation-log" aria-live="polite">Aucune opération effectuée.</pre>
+        </section>
+
+    </div>
+
+</main>
+
+<footer>
+    <span>Pythonpédia · Administration réseau</span>
+    <span>FastAPI · REST · Python</span>
+</footer>
+
+</body>
+</html>

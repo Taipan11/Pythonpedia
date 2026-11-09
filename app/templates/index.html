@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pythonpédia — API distribuée</title>
+    <meta name="description"
+          content="Catalogue distribué de références et ressources Python.">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='/css/style.css') }}">
+</head>
+
+<body>
+    <header class="header">
+        <a href="/" class="brand">
+            <span class="brand-icon">Py</span>
+            <span>Pythonpédia</span>
+        </a>
+
+        <nav>
+            <a href="/search">Rechercher</a>
+            <a href="/topics">Topics</a>
+            <a href="#api">API</a>
+            <a href="/docs">Documentation</a>
+
+            <a href="/admin/network" class="nav-button">
+                Administration
+            </a>
+        </nav>
+    </header>
+
+    <main class="home-container">
+        <section class="hero">
+            <div class="status">
+                <span class="status-dot"></span>
+                API REST
+            </div>
+
+            <h1>Pythonpédia</h1>
+
+            <p class="subtitle">
+                Une encyclopédie distribuée de références Python.
+            </p>
+
+            <p class="description">
+                Explorez les ressources disponibles sur ce serveur,
+                organisées par thématiques et catégories.
+                Pythonpédia repose sur un réseau de serveurs
+                indépendants partageant leurs connaissances.
+            </p>
+
+            <div class="hero-actions">
+               <a href="/topics" class="button primary">
+                    Explorer les topics
+                </a>
+
+                <a href="/docs" class="button secondary">
+                    Documentation interactive
+                </a>
+            </div>
+        </section>
+
+        <section class="api-section" id="api">
+            <div class="section-heading">
+                <h2>Endpoints publics</h2>
+                <p>
+                    Interrogez directement notre API REST
+                    pour accéder aux données locales.
+                </p>
+            </div>
+
+            <div class="endpoint-list">
+
+                <a href="/ws/topics" class="endpoint">
+                    <span class="method">GET</span>
+                    <div class="endpoint-info">
+                        <code>/ws/topics</code>
+                        <p>Liste des topics disponibles localement.</p>
+                    </div>
+                    <span class="arrow">↗</span>
+                </a>
+
+                <div class="endpoint">
+                    <span class="method">GET</span>
+                    <div class="endpoint-info">
+                        <code>/ws/topic/{topic}</code>
+                        <p>
+                            Ressources d'un topic, regroupées
+                            par items et URL.
+                        </p>
+                    </div>
+                </div>
+
+                <a href="/ws/annuaire" class="endpoint">
+                    <span class="method">GET</span>
+                    <div class="endpoint-info">
+                        <code>/ws/annuaire</code>
+                        <p>
+                            Liste des serveurs connus participant
+                            à l'encyclopédie.
+                        </p>
+                    </div>
+                    <span class="arrow">↗</span>
+                </a>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <span>Pythonpédia · Encyclopédie distribuée</span>
+        <span>REST API · FastAPI · Python</span>
+    </footer>
+</body>
+</html>

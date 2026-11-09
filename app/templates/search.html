@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recherche — Pythonpédia</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', path='/css/style.css') }}">
+          
+</head>
+
+<body>
+
+<header class="header">
+    <a href="/" class="brand">
+        <span class="brand-icon">Py</span>
+        <span>Pythonpédia</span>
+    </a>
+
+    <nav>
+        <a href="/">Accueil</a>
+        <a href="/topics">Topics</a>
+        <a href="/docs" class="nav-button">API Docs</a>
+    </nav>
+</header>
+
+<main class="search-container">
+
+    <section class="search-hero">
+        <span class="eyebrow">EXPLORER PYTHONPÉDIA</span>
+
+        <h1>Rechercher une ressource</h1>
+
+        <p class="description">
+            Explorez les connaissances disponibles sur notre serveur,
+            puis étendez votre recherche aux autres serveurs Pythonpédia.
+        </p>
+
+        <form action="/search" method="get" class="search-form">
+            <input
+                type="search"
+                name="q"
+                value="{{ query }}"
+                placeholder="Ex : fonctions, concurrence, exceptions..."
+                maxlength="100"
+                aria-label="Rechercher un topic Python"
+                required
+            >
+
+            <input type="hidden" name="scope" value="local">
+
+            <button type="submit" class="search-submit">
+                Rechercher
+            </button>
+        </form>
+    </section>
+
+    {% if query %}
+
+    <section class="results-section">
+
+        <div class="results-heading">
+            <div>
+                <span class="eyebrow">CATALOGUE LOCAL</span>
+                <h2>Résultats locaux</h2>
+            </div>
+
+            <span class="results-count">
+                {{ local_results | length }} topic(s)
+            </span>
+        </div>
+
+        {% if local_results %}
+
+        <div class="results-grid">
+            {% for topic in local_results %}
+
+            <a
+                href="{{ url_for('topic_page', topic_name=topic) }}"
+                class="result-card"
+            >
+                <div class="result-card-top">
+                    <span class="result-icon">#</span>
+                    <span class="local-label">Local</span>
+                </div>
+
+                <h3>{{ topic }}</h3>
+                <p>Voir les items et les références disponibles.</p>
+
+                <span class="result-link">Explorer le topic ↗</span>
+            </a>
+
+            {% endfor %}
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+            <h3>Aucun topic trouvé localement</h3>
+            <p>
+                Aucun topic ne correspond à « {{ query }} ».
+                Vous pouvez étendre la recherche aux autres serveurs.
+            </p>
+        </div>
+
+        {% endif %}
+
+    </section>
+
+    <section class="network-section">
+
+        <div class="network-heading">
+            <div>
+                <span class="eyebrow">ENCYCLOPÉDIE DISTRIBUÉE</span>
+                <h2>Recherche sur le réseau</h2>
+                <p>
+                    Interrogez les serveurs approuvés pour découvrir
+                    d'autres références.
+                </p>
+            </div>
+        </div>
+
+        {% if scope == "local" %}
+
+        <form action="/search" method="get">
+            <input type="hidden" name="q" value="{{ query }}">
+            <input type="hidden" name="scope" value="network">
+
+            <button type="submit" class="network-button">
+                ↗ Étendre la recherche au réseau
+            </button>
+        </form>
+
+        {% else %}
+
+        <div class="network-summary">
+            <span>{{ servers_checked }} serveur(s) interrogé(s)</span>
+            <span>{{ remote_results | length }} résultat(s)</span>
+            <span>{{ network_errors | length }} erreur(s)</span>
+        </div>
+
+        {% if remote_results %}
+
+        <div class="remote-results">
+
+            {% for result in remote_results %}
+
+            <article class="remote-card">
+
+                <div class="remote-header">
+                    <div>
+                        <span class="eyebrow">TOPIC DISTANT</span>
+                        <h3>{{ result.topic }}</h3>
+                    </div>
+
+                    <span class="remote-badge">Réseau</span>
+                </div>
+
+                <div class="peer-origin">
+                    <strong>Sources :</strong>
+
+                    {% for source in result.sources %}
+                        <span class="source-badge">
+                            {{ source }}
+                        </span>
+                    {% endfor %}
+                </div>
+
+                {% for item_name, urls in result.items.items() %}
+
+                <div class="remote-item">
+                    <h4>{{ item_name }}</h4>
+
+                    <ul>
+                        {% for url in urls %}
+                        <li>
+                            <a
+                                href="{{ url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {{ url }} ↗
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                {% endfor %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+            <h3>Aucun résultat distant</h3>
+            <p>
+                Aucun serveur interrogé n'a retourné de
+                topic correspondant à votre recherche.
+            </p>
+        </div>
+
+        {% endif %}
+
+        {% if network_errors %}
+
+        <div class="network-errors">
+            <h3>Serveurs ou ressources indisponibles</h3>
+
+            <ul>
+                {% for error in network_errors %}
+                <li>
+                    <strong>{{ error.peer }}</strong>
+                    — {{ error.error }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% endif %}
+
+        {% endif %}
+
+    </section>
+
+    {% endif %}
+
+</main>
+
+<footer>
+    <span>Pythonpédia · Encyclopédie distribuée</span>
+    <span>FastAPI · Python · REST</span>
+</footer>
+
+</body>
+</html>
