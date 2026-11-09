@@ -32,7 +32,7 @@ class Settings(BaseSettings):
 
     # Stockage
     STORAGE_BACKEND: Literal["memory", "sqlite"] = "memory"
-    DB_PATH: Path = BASE_DIR / "pythonpedia.db"
+    DB_PATH: Path = BASE_DIR / "storage" / "pythonpedia.sqlite3"
 
     # Réseau
     REQUEST_TIMEOUT: float = Field(default=5.0, gt=0, le=30)
