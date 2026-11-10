@@ -36,3 +36,15 @@ class MemoryPeerRepository:
 
         peer.approved = True
         return True
+
+    def delete_peer(self, url: str) -> bool:
+        """Supprime un serveur du repository en mémoire."""
+
+        key = url.rstrip("/")
+
+        if key not in self._peers:
+            return False
+
+        del self._peers[key]
+
+        return True

@@ -87,6 +87,25 @@ def approve_peer(
         "peer_id": peer_id,
     }
 
+@router.delete("/peers/{peer_id}")
+def delete_peer(
+    peer_id: int,
+    peers: PeerDep,
+):
+    """Supprime un serveur enregistré."""
+
+    deleted = peers.delete_peer(peer_id)
+
+    if not deleted:
+        raise HTTPException(
+            status_code=404,
+            detail="Serveur inconnu",
+        )
+
+    return {
+        "deleted": True,
+        "peer_id": peer_id,
+    }
 
 # ============================================================
 # CONSULTATION DES SERVEURS

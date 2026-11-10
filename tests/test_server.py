@@ -155,3 +155,21 @@ async def test_sync_imports_topics_and_directory(setup_server, monkeypatch):
     second = await sync.synchronize_peer(peer)
     assert second.urls_added == 0
     assert second.topics_added == 0
+
+
+
+def test_delete_peer():
+    repository = MemoryPeerRepository()
+    service = PeerService(repository)
+
+    service.register(
+        "http://127.0.0.1:8889",
+        approved=True,
+    )
+
+    assert len(service.get_peers()) == 1
+
+    assert service.delete_peer(0) is True
+    assert service.get_peers() == []
+
+    assert service.delete_peer(0) is False

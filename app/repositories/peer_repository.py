@@ -13,3 +13,7 @@ class PeerRepository(Protocol):
     def approve_peer(self, url: str) -> bool:
         """Approuve un serveur existant et persiste la modification."""
         ...
+
+    def delete_peer(self, url: str) -> bool:
+        """Supprime un serveur existant et persiste la modification."""
+        ...

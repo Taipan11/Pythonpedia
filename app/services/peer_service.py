@@ -106,3 +106,13 @@ class PeerService:
             return False
 
         return self.repository.approve_peer(str(peer.url))
+
+    def delete_peer(self, peer_id: int) -> bool:
+        """Supprime un serveur connu."""
+
+        peer = self.get_peer(peer_id)
+
+        if peer is None:
+            return False
+
+        return self.repository.delete_peer(str(peer.url))

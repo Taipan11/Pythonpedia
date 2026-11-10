@@ -880,3 +880,13 @@ footer {
 [hidden] {
     display: none !important;
 }
+
+.admin-button.danger {
+    background: #7f1d1d;
+    color: #fecaca;
+    border: 1px solid #b91c1c;
+}
+
+.admin-button.danger:hover:not(:disabled) {
+    background: #991b1b;
+}

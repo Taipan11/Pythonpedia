@@ -61,3 +61,16 @@ class SQLitePeerRepository:
             )
 
             return result.rowcount > 0
+
+    def delete_peer(self, url: str) -> bool:
+        """Supprime un serveur enregistré dans SQLite."""
+
+        key = url.rstrip("/")
+
+        with connect(self.db_path) as db:
+            result = db.execute(
+                "DELETE FROM peers WHERE url = ?",
+                (key,),
+            )
+
+            return result.rowcount > 0

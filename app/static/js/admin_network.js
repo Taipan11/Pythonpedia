@@ -171,6 +171,35 @@ function createPeerCard(peer, index) {
         actions.append(topicsButton, syncButton);
     }
 
+
+    // Suppression d'un serveur.
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "admin-button danger";
+    deleteButton.textContent = "Supprimer";
+
+    deleteButton.addEventListener("click", () => {
+        if (!confirm(`Supprimer le serveur ${peer.url} ?`)) {
+            return;
+        }
+
+        perform(deleteButton, async () => {
+            await request(
+                `/peers/${index}`,
+                { method: "DELETE" }
+            );
+
+            await loadPeers();
+
+            log({
+                operation: "Suppression",
+                server: peer.url,
+                success: true,
+            });
+        });
+    });
+
+    actions.appendChild(deleteButton);
+
     card.append(information, actions);
 
     return card;
